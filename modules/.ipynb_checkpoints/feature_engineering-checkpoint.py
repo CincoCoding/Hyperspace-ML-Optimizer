@@ -5,7 +5,7 @@ from finta import TA
 import pandas as pd 
 
 
-def add_features(signals_df):
+def add_features(signals_df, reward, risk):
     ### Add Features (Techincal Analysis Indicators) to the DataFrame
     
     #  Setup EMAs for crosses
@@ -45,8 +45,8 @@ def add_features(signals_df):
     num_rows_in_df = signals_df.shape[0]
     
     # reward:risk ratio
-    reward = 1
-    risk = 1
+    reward = reward
+    risk = risk
     
     # we also figure out our exit price
     # hitting target price before the stop price signals a win and will be 1

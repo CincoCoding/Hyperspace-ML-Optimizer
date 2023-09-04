@@ -40,7 +40,5 @@ def read_data():
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
     signals_df.index = pd.to_datetime(signals_df.index)
     
-    print(signals_df.head)
-    
     return signals_df
     
