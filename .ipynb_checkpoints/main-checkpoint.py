@@ -9,7 +9,7 @@ from modules.data_processing import download_data, read_data
 from modules.feature_engineering import add_features, clean_data
 from modules.modeling import train_model
 from modules.evaluation import evaluate_model
-from modules.visualization import plot_results
+from modules.visualization import record_metrics
 
 def main():
     
@@ -33,8 +33,7 @@ def main():
             print(f"train_model(), Reward = {reward}, Risk = {risk}")
             predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
             print(f"evaluate_model(), Reward = {reward}, Risk = {risk}")
-            results = plot_results(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
-            print(f"plot_results(), Reward = {reward}, Risk = {risk}")
+            results = record_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
             print(results)
 
 

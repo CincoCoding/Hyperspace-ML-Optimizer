@@ -3,7 +3,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt 
 
-def plot_results(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index, reward, risk, results):
+def record_metrics(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index, reward, risk, results):
 
     # Create a predictions DataFrame for SVM
     predictions_df = pd.DataFrame(index=X_test_index)
@@ -89,25 +89,29 @@ def plot_results(signals_df, testing_signal_predictions, testing_probability_est
     # Calculate cumulative returns for the algorithmic trading strategy
     cumulative_returns = (1 + buy_signals_df["trading_algorithm_returns"]).cumprod()[-1]
     
+    # Create a dictionary to hold the model;s metrics
+    metrics_dict = {
+    "Risk": risk,
+    "Reward": reward,
+    "Win Rate (%)": win_rate * 100,
+    "Profit Factor": profit_factor,
+    "Cumulative Returns": cumulative_returns,
+    "Sortino Ratio": sortino_ratio,
+    "Average Profit per Winning Trade (%)": average_profit_per_winning_trade * 100,
+    "Average Loss per Losing Trade (%)": average_loss_per_losing_trade * 100,
+    "Average Return (%)": average_return * 100,
+    "Trade Frequency (Trades per Day)": trade_frequency_per_day,
+    "Downside Deviation": downside_deviation,
+    "Volatility (Standard Deviation of Algo Returns)": algo_volatility,
+    "Gross Profit (%)": gross_profit,
+    "Gross Loss (%)": gross_loss,
+    "Total Number of Winning Trades": len(winning_trades),
+    "Total Number of Trades": len(total_trades),
+    "Risk-Free Rate (%)": risk_free_rate * 100,
+    "Risk:Reward Ratio": risk_reward_ratio,
+}
     
-    # Print the sorted metrics by importance
-    print("Risk:Reward Ratio:", risk_reward_ratio)
-    print("Win Rate (%):", win_rate * 100)
-    print("Profit Factor:", profit_factor)
-    print("Sortino Ratio:", sortino_ratio)
-    print("Average Profit per Winning Trade (%):", average_profit_per_winning_trade * 100)
-    print("Average Loss per Losing Trade (%):", average_loss_per_losing_trade * 100)
-    print("Average Return (%):", average_return * 100)
-    print("Trade Frequency (Trades per Day):", trade_frequency_per_day)
-    print("Downside Deviation:", downside_deviation)
-    print("Volatility (Standard Deviation of Algo Returns):", algo_volatility)
-    print("Gross Profit (%):", gross_profit)
-    print("Gross Loss (%):", gross_loss)
-    print("Total Number of Winning Trades:", len(winning_trades))
-    print("Total Number of Trades:", len(total_trades))
-    print("Risk-Free Rate (%):", risk_free_rate * 100)
-
-    results.append({"Risk": risk, "Reward": reward, "Cumulative Returns": cumulative_returns, "Profit Factor": profit_factor})
+    results.append(metrics_dict)
 
     return results
         
