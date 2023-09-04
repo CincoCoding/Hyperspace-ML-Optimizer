@@ -31,13 +31,4 @@ def plot_results(signals_df, testing_signal_predictions, testing_probability_est
     # Calculate cumulative returns for the actual stock returns
     predictions_df["Cumulative Actual Returns"] = (1 + predictions_df["actual_returns"]).cumprod()
     
-    # Create the plot
-    plt.figure(figsize=(12, 6))
-    plt.plot(buy_signals_df.index, buy_signals_df["Cumulative Algo Returns"], label="Algorithm Returns (Buy Signals)")
-    plt.plot(predictions_df.index, predictions_df["Cumulative Actual Returns"], label="Actual Returns")
-    plt.xlabel("Date") 
-    plt.ylabel("Cumulative Returns")
-    plt.title("Cumulative Returns of Algorithm vs. Actual Returns")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    
