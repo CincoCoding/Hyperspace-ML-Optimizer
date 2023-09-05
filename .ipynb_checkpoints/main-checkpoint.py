@@ -14,13 +14,13 @@ from modules.visualization import record_metrics
 def main():
     
     # Define a range of values for risk and reward
-    risk_values = [1.0, 1.5, 2.0]  # Example risk values
-    reward_values = [1.0, 1.5, 2.0]  # Example reward values
+    risk_values = range(1, 11)  # Example risk values
+    reward_values = range(1, 11)  # Example reward values
     
     results = []
     
-    for reward in reward_values:
-        for risk in risk_values:
+    for risk in risk_values:
+        for reward in reward_values:
             # Your program's main logic here
             data = read_data()
             
@@ -34,7 +34,7 @@ def main():
             predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
             print(f"evaluate_model(), Reward = {reward}, Risk = {risk}")
             results = record_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
-            print(results)
+            print(results, len(results))
 
 
 
