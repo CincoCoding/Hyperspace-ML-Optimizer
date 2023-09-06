@@ -34,7 +34,7 @@ def add_features(signals_df, reward, risk):
     all_features = ["volume", "trade_count", "vwap", "9EMA", "20EMA", "50EMA", "200SMA", "ATR", "RSI", "BB_UPPER", "BB_MIDDLE", "BB_LOWER", "MACD", "Bollinger_Bands_Above_Upper_BB", "Bollinger_Bands_Below_Lower_BB", "9EMA/20EMA_Cross, 9EMA>20EMA", "9EMA/20EMA_Cross, 9EMA<20EMA", "50EMA/200SMA_Cross, 50EMA>200SMA", "50EMA/200SMA_Cross, 50EMA<200SMA", "RSI_Over_70", "RSI_Under_30", "VWAP_Cross_From_Above", "VWAP_Cross_From_Below"]
     
     # Exit is the labeled target for ML, Exit Price is for use in Pnl Metrics
-    signals_df["Exit Price"] = 0
+    signals_df["Exit Price"] = float(0)
     signals_df["Exit"] = 0
        
         
@@ -58,9 +58,9 @@ def add_features(signals_df, reward, risk):
         # calculate volatility for each candle
         atr = signals_df["ATR"].iloc[j]
         # stop is entry price minus the average volatility for the entry period
-        stop = entry - (risk * atr)
+        stop = float(entry - (risk * atr))
         # target is entry price plus the average volatility for the entry period times a multiplier
-        target = entry + (reward * atr)
+        target = float(entry + (reward * atr))
         # loop again thru the dataset to compare j entry price to future closing prices to see if we hit target or stop
         for k in range(j + 1, num_rows_in_df):
             # current low of the candle
