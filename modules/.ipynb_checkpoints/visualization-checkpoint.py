@@ -26,10 +26,14 @@ def record_metrics(signals_df, testing_signal_predictions, testing_probability_e
     # Filter rows where the predicted signal is 1 and the probability estimate is >= 0.60
     buy_signals_df = predictions_df[(predictions_df["predicted_signal"] == 1) & (predictions_df["probability_estimates"] >= 0.50)]
     
-    # Calculate cumulative returns for the algorithmic trading strategy a
-    buy_signals_df["Cumulative Algo Returns"] = (1 + buy_signals_df["trading_algorithm_returns"]).cumprod()
-    
-    buy_signals_df["Cumulative Actual Returns"] = (1 + predictions_df["actual_returns"]).cumprod()
+    # Calculate cumulative returns for both strategies
+    cumulative_algo_returns = buy_signals_df.loc[:, "trading_algorithm_returns"]
+    cumulative_algo_returns = 1 + cumulative_algo_returns
+    buy_signals_df.loc[:, "Cumulative Algo Returns"] = cumulative_algo_returns.cumprod()
+
+    cumulative_actual_returns = predictions_df.loc[:, "actual_returns"]
+    cumulative_actual_returns = 1 + cumulative_actual_returns
+    buy_signals_df.loc[:, "Cumulative Actual Returns"] = cumulative_actual_returns.cumprod()    
     
     ###################################################################################################################
     ###################################################################################################################

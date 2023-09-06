@@ -70,17 +70,17 @@ def add_features(signals_df, reward, risk):
             # record and break if we hit stop or target, if not we check the next k period
             # if current low breaks our stop we should've sold: -1 in our "Exit" column
             if curr_low <= stop:
-                signals_df["Exit Price"].iloc[j] = stop
-                signals_df["Exit"].iloc[j] = -1
+                signals_df.iloc[j, -2] = stop
+                signals_df.iloc[j, -1] = -1
                 # if we hit the stop break the inner loop to check the next row
                 break
             # if current high breaks our target we should've sold: +1 in our "Exit" column
             elif curr_high >= target:
-                signals_df["Exit Price"].iloc[j] = target
-                signals_df["Exit"].iloc[j] = 1
+                signals_df.iloc[j, -2] = target
+                signals_df.iloc[j, -1] = 1
                 # if we hit the target break the inner loop to check the next row
                 break
-    
+        
     # drop beginning columns to avoid NaN values from EMA/SMA calculations
     signals_df = signals_df[longest_MA_window:]
     
