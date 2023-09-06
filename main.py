@@ -1,6 +1,7 @@
 # main.py
 
 # import libraries
+import pandas as pd
 from modules import config
 from modules import dependencies
 
@@ -39,6 +40,9 @@ def main():
             
             results = record_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
             print(results, len(results))
+            
+    results_df = pd.DataFrame(results)
+    results_df.to_csv("results_df.csv")
 
 
 
