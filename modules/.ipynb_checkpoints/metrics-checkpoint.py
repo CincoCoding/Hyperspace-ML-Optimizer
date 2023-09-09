@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-def record_sim_metrics(buy_signals_df, reward, risk, results, prob):
+def record_sim_metrics(buy_signals_df, reward, risk, results):
 
     # Calculate the time period for which you want to calculate the frequency (e.g., in days)
     start_date = buy_signals_df.index.min()
@@ -60,7 +60,6 @@ def record_sim_metrics(buy_signals_df, reward, risk, results, prob):
     
     # Create a dictionary to hold the model;s metrics
     metrics_dict = {
-    "Probability Threshold:": prob / 10,
     "Risk": risk,
     "Reward": reward,
     "Win Rate (%)": win_rate * 100,

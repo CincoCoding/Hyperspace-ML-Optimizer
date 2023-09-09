@@ -10,8 +10,8 @@ from modules.data_processing import download_data, read_data
 from modules.feature_engineering import add_features, clean_data
 from modules.modeling import train_model
 from modules.evaluation import evaluate_model
-from modules.simulate import record_sim_trades
-from modules.metrics import record_sim_metrics
+from modules.prob_simulate import record_sim_trades
+from modules.prob_metrics import record_sim_metrics
 
 def main():
     
@@ -19,7 +19,7 @@ def main():
     reward = 10
     risk = 4
 
-    probability_range = range(9, 4, -1)
+    probability_range = range(4, 9)
     
     results = []
     
@@ -47,7 +47,7 @@ def main():
         buy_signals_df = record_sim_trades(data_with_features, predictions, prediction_probabilities, X_test_index, prob)
         
         print(f"record_sim_metrics(), Reward = {reward}, Risk = {risk}")
-        results = record_sim_metrics(buy_signals_df, reward, risk, results)
+        results = record_sim_metrics(buy_signals_df, reward, risk, results, prob)
         
         print(results, len(results))
 
