@@ -11,7 +11,7 @@ def evaluate_model(model, undersampled_X_train_scaled, X_test_scaled, undersampl
     
     # Evaluate the model using a classification report
     training_report = classification_report(undersampled_y_train, training_signal_predictions)
-    print(training_report)
+    print(f"Training Report \n {training_report}")
     
     # Use the trained model to predict the trading signals for the testing data.
     testing_signal_predictions = model.predict(X_test_scaled)
@@ -19,6 +19,6 @@ def evaluate_model(model, undersampled_X_train_scaled, X_test_scaled, undersampl
     
     # Evaluate the model's ability to predict the trading signal for the testing data
     testing_report = classification_report(y_test, testing_signal_predictions)
-    print(testing_report)
+    print(f"Testing Report \n {testing_report}")
     
     return testing_signal_predictions, testing_probability_estimates

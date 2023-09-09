@@ -10,7 +10,7 @@ from modules.data_processing import download_data, read_data
 from modules.feature_engineering import add_features, clean_data
 from modules.modeling import train_model
 from modules.evaluation import evaluate_model
-from modules.visualization import record_metrics
+from modules.record import record_trades_and_metrics
 
 def main():
     
@@ -23,22 +23,24 @@ def main():
     for risk in risk_values:
         for reward in reward_values:
             # Your program's main logic here
-            data = read_data()
             print(f"read_data(), Reward = {reward}, Risk = {risk}")
-            
-            data_with_features = add_features(data, reward, risk)
+            data = read_data()
+
             print(f"add_features(), Reward = {reward}, Risk = {risk}")
-            
-            cleaned_data = clean_data(data_with_features)
+            data_with_features = add_features(data, reward, risk)
+
             print(f"clean_data(), Reward = {reward}, Risk = {risk}")
-            
-            model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data)
+            cleaned_data = clean_data(data_with_features)
+
             print(f"train_model(), Reward = {reward}, Risk = {risk}")
+            model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data)
             
-            predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
             print(f"evaluate_model(), Reward = {reward}, Risk = {risk}")
+            predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
+
+            print(f"record_trades_and_metrics(), Reward = {reward}, Risk = {risk}")
+            results = record_trades_and_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
             
-            results = record_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
             print(results, len(results))
             
     results_df = pd.DataFrame(results)
@@ -48,3 +50,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

@@ -3,7 +3,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt 
 
-def record_metrics(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index, reward, risk, results):
+def record_trades_and_metrics(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index, reward, risk, results):
 
     # Create a predictions DataFrame for SVM
     predictions_df = pd.DataFrame(index=X_test_index)
@@ -39,6 +39,7 @@ def record_metrics(signals_df, testing_signal_predictions, testing_probability_e
     ###################################################################################################################
     ###################################################################################################################
     
+
     # Calculate the time period for which you want to calculate the frequency (e.g., in days)
     start_date = buy_signals_df.index.min()
     end_date = buy_signals_df.index.max()

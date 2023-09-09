@@ -1,8 +1,9 @@
-pandas
-matplotlib
+alpaca-trade-api
 finta
 hvplot
-alpaca-trade-api
+imbalanced-learn
+jupyterlab
+matplotlib
+pandas
 scikit-learn
 scikit-learn-intelex
-imbalanced-learn
