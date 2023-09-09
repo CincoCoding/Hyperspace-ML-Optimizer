@@ -4,7 +4,7 @@
 import pandas as pd
 
 
-def record_sim_trades(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index):
+def record_sim_trades(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index, prob):
     # Create a predictions DataFrame for SVM
     predictions_df = pd.DataFrame(index=X_test_index)
     
@@ -24,7 +24,7 @@ def record_sim_trades(signals_df, testing_signal_predictions, testing_probabilit
     predictions_df["probability_estimates"] = testing_probability_estimates[:, 1]
     
     # Filter rows where the predicted signal is 1 and the probability estimate is >= 0.60
-    buy_signals_df = predictions_df[(predictions_df["predicted_signal"] == 1) & (predictions_df["probability_estimates"] >= 0.50)]
+    buy_signals_df = predictions_df[(predictions_df["predicted_signal"] == 1) & (predictions_df["probability_estimates"] >= prob/10)]
     
     # Calculate cumulative returns for both strategies
     cumulative_algo_returns = buy_signals_df.loc[:, "trading_algorithm_returns"]
