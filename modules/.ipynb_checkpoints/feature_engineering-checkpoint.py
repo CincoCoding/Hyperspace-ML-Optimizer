@@ -90,16 +90,8 @@ def add_features(signals_df, reward, risk):
     
 def clean_data(signals_df):
     # Data Cleaning
-    
-    # check if there is potentially-unwanted zeros in the dataframe
-    # zeros come from the end of the dataframe where neither the target or stop were hit
-    signals_df["Exit"].value_counts()
-
-    
     # remove all unwanted zeros from the exit column
     signals_df = signals_df.loc[signals_df["Exit"] != 0]
-    signals_df["Exit"].value_counts()
-
     
     # Define NYSE regular trading hours
     nyse_opening_time = pd.Timestamp("09:30:00")

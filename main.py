@@ -43,7 +43,7 @@ def main():
             # results = record_trades_and_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
 
             print(f"record_sim_trades(), Reward = {reward},  Risk = {risk}")
-            buy_signals_df = record_sim_trades(data_with_features, predictions, prediction_probabilities, X_test_index)
+            buy_signals_df = record_sim_trades(cleaned_data, predictions, prediction_probabilities, X_test_index)
 
             print(f"record_sim_metrics(), Reward = {reward}, Risk = {risk}")
             results = record_sim_metrics(buy_signals_df, reward, risk, results)

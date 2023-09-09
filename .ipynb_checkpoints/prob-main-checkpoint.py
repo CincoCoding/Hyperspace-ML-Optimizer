@@ -19,21 +19,18 @@ def main():
     reward = 10
     risk = 4
 
-    probability_range = range(4, 9)
+    probability_range = range(50, 89)
     
     results = []
+
+    # Load the DataFrame from a CSV file
+    cleaned_data = pd.read_csv('./data/cleaned_data.csv', index_col="timestamp")
+    
+    # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
+    cleaned_data.index = pd.to_datetime(cleaned_data.index)
     
     for prob in probability_range:
         # Your program's main logic here
-        print(f"read_data(), Reward = {reward}, Risk = {risk}")
-        data = read_data()
-        
-        print(f"add_features(), Reward = {reward}, Risk = {risk}")
-        data_with_features = add_features(data, reward, risk)
-        
-        print(f"clean_data(), Reward = {reward}, Risk = {risk}")
-        cleaned_data = clean_data(data_with_features)
-        
         print(f"train_model(), Reward = {reward}, Risk = {risk}")
         model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data)
         
@@ -44,7 +41,7 @@ def main():
         # results = record_trades_and_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
         
         print(f"record_sim_trades(), Reward = {reward},  Risk = {risk}")
-        buy_signals_df = record_sim_trades(data_with_features, predictions, prediction_probabilities, X_test_index, prob)
+        buy_signals_df = record_sim_trades(cleaned_data, predictions, prediction_probabilities, X_test_index, prob)
         
         print(f"record_sim_metrics(), Reward = {reward}, Risk = {risk}")
         results = record_sim_metrics(buy_signals_df, reward, risk, results, prob)
@@ -53,7 +50,7 @@ def main():
 
     
     results_df = pd.DataFrame(results)
-    results_df.to_csv("results_df.csv")
+    results_df.to_csv("./data/results_df_prob.csv")
 
 
 

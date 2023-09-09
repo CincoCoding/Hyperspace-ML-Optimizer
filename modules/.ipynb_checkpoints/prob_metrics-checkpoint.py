@@ -60,7 +60,7 @@ def record_sim_metrics(buy_signals_df, reward, risk, results, prob):
     
     # Create a dictionary to hold the model;s metrics
     metrics_dict = {
-    "Probability Threshold": prob,
+    "Probability Threshold": prob/100,
     "Risk": risk,
     "Reward": reward,
     "Win Rate (%)": win_rate * 100,

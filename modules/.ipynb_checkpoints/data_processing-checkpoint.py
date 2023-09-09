@@ -31,10 +31,7 @@ def download_data():
 
 
 def read_data():
-    # Set signal variable
-    signal = 1
-    
-    # Load the DataFrame from a CSV file
+# Load the DataFrame from a CSV file
     signals_df = pd.read_csv('./data/signals_df.csv', index_col="timestamp")
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
