@@ -10,7 +10,8 @@ from modules.data_processing import download_data, read_data
 from modules.feature_engineering import add_features, clean_data
 from modules.modeling import train_model
 from modules.evaluation import evaluate_model
-from modules.record import record_trades_and_metrics
+from modules.simulate import record_sim_trades
+from modules.metrics import record_sim_metrics
 
 def main():
     
@@ -38,8 +39,16 @@ def main():
             print(f"evaluate_model(), Reward = {reward}, Risk = {risk}")
             predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
 
-            print(f"record_trades_and_metrics(), Reward = {reward}, Risk = {risk}")
-            results = record_trades_and_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
+            # print(f"record_trades_and_metrics(), Reward = {reward}, Risk = {risk}")
+            # results = record_trades_and_metrics(data_with_features, predictions, prediction_probabilities, X_test_index, reward, risk, results)
+
+            print(f"record_sim_trades(), Reward = {reward},  Risk = {risk}")
+            buy_signals_df = record_sim_trades(signals_df, testing_signal_predictions, testing_probability_estimates, X_test_index)
+
+            print(f"record_sim_metrics(), Reward = {reward}, Risk = {risk}")
+            results = record_sim_metrics(buy_signals_df, reward, risk, results)
+
+            
             
             print(results, len(results))
             
