@@ -47,7 +47,7 @@ def main():
         buy_signals_df = record_sim_trades(data_with_features, predictions, prediction_probabilities, X_test_index, prob)
         
         print(f"record_sim_metrics(), Reward = {reward}, Risk = {risk}")
-        results = record_sim_metrics(buy_signals_df, reward, risk, results)
+        results = record_sim_metrics(buy_signals_df, reward, risk, results, prob)
         
         print(results, len(results))
 
