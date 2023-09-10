@@ -21,8 +21,8 @@ def download_data():
     # Make API call
     signals_df = api.get_bars(ticker, "5Min", "2022-01-01", "2023-08-30", adjustment='raw').df
     
-#     # Save the DataFrame with the date index
-#     signals_df.to_csv('signals_df.csv')
+    # Save the DataFrame with the date index
+    signals_df.to_csv('AAPL_time_series_df.csv')
     
     print(signals_df.head())
     
@@ -32,7 +32,7 @@ def download_data():
 
 def read_data():
 # Load the DataFrame from a CSV file
-    signals_df = pd.read_csv('./data/signals_df.csv', index_col="timestamp")
+    signals_df = pd.read_csv('./data/AAPL_time_series.csv', index_col="timestamp")
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
     signals_df.index = pd.to_datetime(signals_df.index)

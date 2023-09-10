@@ -1,4 +1,5 @@
 alpaca-trade-api
+Alpaca-py
 finta
 hvplot
 imbalanced-learn

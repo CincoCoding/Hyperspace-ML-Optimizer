@@ -24,7 +24,7 @@ def main():
     results = []
 
     # Load the DataFrame from a CSV file
-    cleaned_data = pd.read_csv('./data/cleaned_data.csv', index_col="timestamp")
+    cleaned_data = pd.read_csv('./notebook/cleaned_data.csv', index_col="timestamp")
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
     cleaned_data.index = pd.to_datetime(cleaned_data.index)
