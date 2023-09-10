@@ -21,8 +21,8 @@ def main():
     
     results = []
     
-    for risk in risk_values:
-        for reward in reward_values:
+    for reward in reward_values:
+        for risk in risk_values:
             # Your program's main logic here
             print(f"read_data(), Reward = {reward}, Risk = {risk}")
             data = read_data()

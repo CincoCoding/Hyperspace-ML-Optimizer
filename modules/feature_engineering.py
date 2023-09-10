@@ -36,6 +36,13 @@ def add_features(signals_df, reward, risk):
     # Exit is the labeled target for ML, Exit Price is for use in Pnl Metrics
     signals_df["Exit Price"] = float(0)
     signals_df["Exit"] = 0
+
+    # # Define NYSE regular trading hours
+    # nyse_opening_time = pd.Timestamp("09:30:00")
+    # nyse_closing_time = pd.Timestamp("16:00:00")
+    
+    # # Filter the DataFrame to include only data within NYSE regular trading hours
+    # signals_df = signals_df.between_time(nyse_opening_time.time(), nyse_closing_time.time())
        
         
     ### Create Volatility Based Targets and Stops
@@ -93,12 +100,6 @@ def clean_data(signals_df):
     # remove all unwanted zeros from the exit column
     signals_df = signals_df.loc[signals_df["Exit"] != 0]
     
-    # Define NYSE regular trading hours
-    nyse_opening_time = pd.Timestamp("09:30:00")
-    nyse_closing_time = pd.Timestamp("16:00:00")
-    
-    # Filter the DataFrame to include only data within NYSE regular trading hours
-    signals_df = signals_df.between_time(nyse_opening_time.time(), nyse_closing_time.time())
     # signals_df = signals_df[signals_df["volume"] >= signals_df["volume"].mean()]
 
     return signals_df
