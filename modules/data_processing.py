@@ -32,7 +32,7 @@ def download_data():
 
 def read_data():
 # Load the DataFrame from a CSV file
-    signals_df = pd.read_csv('./data/AAPL_time_series.csv', index_col="timestamp")
+    signals_df = pd.read_csv('./data/ETH_time_series.csv', index_col="timestamp")
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
     signals_df.index = pd.to_datetime(signals_df.index)
