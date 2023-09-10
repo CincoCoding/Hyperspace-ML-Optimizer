@@ -8,8 +8,8 @@ import pandas as pd
 def download_data():
     # THE FOLLOWING IS TO REQUEST IN DATA USING THE ALPACA_API
     # API credentials
-    API_KEY = 'PKETI0Q5C8PPUXVNHJFJ'
-    SECRET_KEY = 'WQxmEpBCoMXydCCg0G8cUe6hGLpgaAfrvedZ09Fy'
+    API_KEY = 'PKD98H4EZF8YRDLUZ5I2'
+    SECRET_KEY = 'b5ZbNnx35m3uaB6vRnrU7TLQlgEfDw0bKf1Y8Zsm'
     API_BASE_URL = "https://paper-api.alpaca.markets"
     
     # Create a connection to the API 
