@@ -52,7 +52,7 @@ def main():
 
     
     results_df = pd.DataFrame(results)
-    results_df.to_csv("results_df_eth.csv")
+    results_df.to_csv("results_df_spy.csv")
 
 
 

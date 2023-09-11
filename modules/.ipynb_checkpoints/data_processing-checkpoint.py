@@ -16,7 +16,7 @@ def download_data():
     api = tradeapi.REST(API_KEY, SECRET_KEY, API_BASE_URL, api_version="v2")
         
     # Set the ticket symbol and the number of shares to buy
-    ticker = "AAPL"
+    ticker = "ETH/USD"
     
     # Make API call
     signals_df = api.get_bars(ticker, "5Min", "2022-01-01", "2023-08-30", adjustment='raw').df

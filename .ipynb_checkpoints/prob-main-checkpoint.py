@@ -6,8 +6,6 @@ from modules import config
 from modules import dependencies
 
 # import functions and classes
-from modules.data_processing import download_data, read_data
-from modules.feature_engineering import add_features, clean_data
 from modules.modeling import train_model
 from modules.evaluation import evaluate_model
 from modules.prob_simulate import record_sim_trades
@@ -16,15 +14,16 @@ from modules.prob_metrics import record_sim_metrics
 def main():
     
     # Define a range of values for risk and reward
-    reward = 10
-    risk = 4
+    reward = 1
+    risk = 10
 
-    probability_range = range(50, 89)
+    probability_range = range(50, 78)
     
     results = []
 
     # Load the DataFrame from a CSV file
     cleaned_data = pd.read_csv('./notebook/cleaned_data.csv', index_col="timestamp")
+    cleaned_data = cleaned_data.iloc[ : , 1: ]
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
     cleaned_data.index = pd.to_datetime(cleaned_data.index)
