@@ -15,6 +15,7 @@ def add_features(signals_df, reward, risk):
 
     ### Add Features (Techincal Analysis Indicators) to the DataFrame
 
+    
     #  Setup EMAs for crosses
     longest_MA_window = 200
     signals_df["9EMA"] = TA.EMA(signals_df, 9)
@@ -41,21 +42,15 @@ def add_features(signals_df, reward, risk):
     signals_df["Exit Time"] = pd.Timestamp(0)
     signals_df["Exit"] = 0
     
-
     ### Add Discrete Features Columns to the DataFrame
 
-    # discrete or continuous features (techinal indicators) may be used
-    continuous_features = ["volume", "trade_count", "vwap", "9EMA", "20EMA", "50EMA", "200SMA", "ATR", "RSI", "BB_UPPER", "BB_LOWER", "MACD"]
-    all_features = ["volume", "trade_count", "vwap", "9EMA", "20EMA", "50EMA", "200SMA", "ATR", "RSI", "BB_UPPER", "BB_MIDDLE", "BB_LOWER", "MACD", "Bollinger_Bands_Above_Upper_BB", "Bollinger_Bands_Below_Lower_BB", "9EMA/20EMA_Cross, 9EMA>20EMA", "9EMA/20EMA_Cross, 9EMA<20EMA", "50EMA/200SMA_Cross, 50EMA>200SMA", "50EMA/200SMA_Cross, 50EMA<200SMA", "RSI_Over_70", "RSI_Under_30", "VWAP_Cross_From_Above", "VWAP_Cross_From_Below"]
     
-
     # Define NYSE regular trading hours
     nyse_opening_time = pd.Timestamp("09:30:00")
     nyse_closing_time = pd.Timestamp("16:00:00")
     
     # Filter the DataFrame to include only data within NYSE regular trading hours
     signals_df = signals_df.between_time(nyse_opening_time.time(), nyse_closing_time.time())
-       
         
     ### Create Volatility Based Targets and Stops
 

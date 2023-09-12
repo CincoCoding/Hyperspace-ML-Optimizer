@@ -61,7 +61,7 @@ def record_sim_metrics(buy_signals_df, ticker, timeframe, reward, risk, results)
     # Create a dictionary to hold the model;s metrics
     metrics_dict = {
     "Ticker": ticker,
-    "Timeframe": timeframe,
+    "Timeframe": timeframe[0],
     "Risk": risk,
     "Reward": reward,
     "Win Rate (%)": win_rate * 100,

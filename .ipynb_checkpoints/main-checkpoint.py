@@ -14,28 +14,21 @@ from modules.simulate import record_sim_trades
 from modules.metrics import record_sim_metrics
 
 def main():
-    
-    # Define a range of values for risk and reward
-    risk_values = range(1, 11)  # Example risk values
-    reward_values = range(1, 11)  # Example reward values
-    ticker_values = ["SPY", "META", "AAPL", "AMZN", "NFLX", "GOOGL", "TSLA"]
-
-    # create a dictionary of timeframe values with corresponding date
-    timeframe_values = ["1min", "5min", "15min", "30min", "1hour", "2hour", "4hour"]
-    start_time_values = ["2023-04-01", "2022-01-01", "2018-08-01", "2015-12-01", "2015-12-01", "2015-12-01", "2015-12-01"]
-    timeframe_dict = dict(zip(timeframe_values, start_time_values))
 
     results = []
 
-    for ticker in ticker_values:
-        for timeframe in timeframe_dict:
-            download_data(ticker, timeframe, timeframe_dict[timeframe])
-            for reward in reward_values:
-                for risk in risk_values:
+    for ticker in config.ticker_values:
+        for timeframe in config.timeframe_values:
+            results = []
+            print(f"Results = [{results}]")
+            print(f"download_data(ticker={ticker}, timeframe={timeframe[0]}, start={timeframe[1]})")
+            download_data(ticker, timeframe[0], timeframe[1])
+            for reward in config.reward_values:
+                for risk in config.risk_values:
                            
                     # Your program's main logic here
                     print(f"read_data(), Reward = {reward}, Risk = {risk}")
-                    data = read_data(ticker, timeframe)
+                    data = read_data(ticker, timeframe[0])
     
                     print(f"add_features(), Reward = {reward}, Risk = {risk}")
                     data_with_features = add_features(data, reward, risk)
@@ -44,7 +37,7 @@ def main():
                     cleaned_data = clean_data(data_with_features)
     
                     print(f"train_model(), Reward = {reward}, Risk = {risk}")
-                    model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data)
+                    model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data, timeframe[2])
                     
                     print(f"evaluate_model(), Reward = {reward}, Risk = {risk}")
                     predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
@@ -58,7 +51,8 @@ def main():
                     print(results, len(results))
             
             results_df = pd.DataFrame(results)
-            results_df.to_csv(f"{ticker}_{timeframe}_results_df.csv")
+            results_df = results_df.iloc[:, 3:]
+            results_df.to_csv(f"./data/{ticker}/{ticker}_{timeframe[0]}_results_df.csv")
 
 
 
