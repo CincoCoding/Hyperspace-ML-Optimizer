@@ -51,8 +51,7 @@ def main():
                     print(results, len(results))
             
             results_df = pd.DataFrame(results)
-            results_df = results_df.iloc[:, 3:]
-            results_df.to_csv(f"./data/{ticker}/{ticker}_{timeframe[0]}_results_df.csv")
+            results_df.to_csv(f"./data/{ticker}/{ticker}_{timeframe[0]}_results_df.csv", index=False)
 
 
 
