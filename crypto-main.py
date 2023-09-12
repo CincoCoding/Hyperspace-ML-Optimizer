@@ -16,8 +16,8 @@ from modules.metrics import record_sim_metrics
 def main():
     
     # Define a range of values for risk and reward
-    risk_values = range(1, 15)  # Example risk values
-    reward_values = range(1, 15)  # Example reward values
+    risk_values = range(1, 10)  # Example risk values
+    reward_values = range(1, 10)  # Example reward values
     
     results = []
     

@@ -14,15 +14,15 @@ from modules.prob_metrics import record_sim_metrics
 def main():
     
     # Define a range of values for risk and reward
-    reward = 1
-    risk = 10
+    reward = 10
+    risk = 8
 
     probability_range = range(50, 78)
     
     results = []
 
     # Load the DataFrame from a CSV file
-    cleaned_data = pd.read_csv('./notebook/cleaned_data.csv', index_col="timestamp")
+    cleaned_data = pd.read_csv('./notebook/AAPL_time_series.csv', index_col="timestamp")
     cleaned_data = cleaned_data.iloc[ : , 1: ]
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
@@ -49,7 +49,7 @@ def main():
 
     
     results_df = pd.DataFrame(results)
-    results_df.to_csv("./data/results_df_prob.csv")
+    results_df.to_csv("./results_df_AAPL_prob.csv")
 
 
 

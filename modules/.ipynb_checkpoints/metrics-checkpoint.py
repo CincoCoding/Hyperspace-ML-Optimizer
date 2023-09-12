@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-def record_sim_metrics(buy_signals_df, reward, risk, results):
+def record_sim_metrics(buy_signals_df, ticker, timeframe, reward, risk, results):
 
     # Calculate the time period for which you want to calculate the frequency (e.g., in days)
     start_date = buy_signals_df.index.min()
@@ -56,14 +56,15 @@ def record_sim_metrics(buy_signals_df, reward, risk, results):
     algo_volatility = buy_signals_df['trading_algorithm_returns'].std()
     
     # Calculate cumulative returns for the algorithmic trading strategy
-    cumulative_returns = (1 + buy_signals_df["trading_algorithm_returns"]).cumprod()[-1]
+    cumulative_returns = (1 + buy_signals_df["trading_algorithm_returns"]).cumprod().iloc[-1]
     
     # Create a dictionary to hold the model;s metrics
     metrics_dict = {
+    "Ticker": ticker,
+    "Timeframe": timeframe,
     "Risk": risk,
     "Reward": reward,
     "Win Rate (%)": win_rate * 100,
-    "Profit Factor": profit_factor,
     "Cumulative Returns": cumulative_returns,
     "Sortino Ratio": sortino_ratio,
     "Average Profit per Winning Trade (%)": average_profit_per_winning_trade * 100,
@@ -76,8 +77,8 @@ def record_sim_metrics(buy_signals_df, reward, risk, results):
     "Gross Loss (%)": gross_loss,
     "Total Number of Winning Trades": len(winning_trades),
     "Total Number of Trades": len(total_trades),
-    "Risk-Free Rate (%)": risk_free_rate * 100,
     "Risk:Reward Ratio": risk_reward_ratio,
+    "Profit Factor": profit_factor,
 }
     
     results.append(metrics_dict)

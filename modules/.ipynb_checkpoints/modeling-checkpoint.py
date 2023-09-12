@@ -14,7 +14,7 @@ def train_model(signals_df):
 
     # Make sure we have a sufficient training period
     training_begin = str(signals_df.index.min())
-    training_end = str(signals_df.index.min() + DateOffset(months=6))
+    training_end = str(signals_df.index.min() + DateOffset(months=3))
         
     ### Split the data into training and testing sets.
     
