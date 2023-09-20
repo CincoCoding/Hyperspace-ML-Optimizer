@@ -9,12 +9,12 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 from sklearn import svm
 from imblearn.under_sampling import RandomUnderSampler
 
-def train_model(signals_df):
+def train_model(signals_df, timeframeValue):
     ### Setup Train and Test Sets for and Features
 
     # Make sure we have a sufficient training period
     training_begin = str(signals_df.index.min())
-    training_end = str(signals_df.index.min() + DateOffset(months=3))
+    training_end = str(signals_df.index.min() + DateOffset(days=timeframeValue))
         
     ### Split the data into training and testing sets.
     

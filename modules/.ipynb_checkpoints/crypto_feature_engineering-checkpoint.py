@@ -6,7 +6,15 @@ import pandas as pd
 
 
 def add_features(signals_df, reward, risk):
+    
+    import warnings
+    # Ignore FutureWarnings related to Pandas data type compatibility
+    warnings.filterwarnings("ignore", category=FutureWarning)
+    # Disable the chained_assignment warning
+    pd.options.mode.chained_assignment = None  # "None" suppresses the warning
+
     ### Add Features (Techincal Analysis Indicators) to the DataFrame
+
     
     #  Setup EMAs for crosses
     longest_MA_window = 200
@@ -24,38 +32,20 @@ def add_features(signals_df, reward, risk):
     # join macd and bbands Dataframes to signals_df
     bbands_df = pd.concat([bbands_df, macd_df], axis=1)
     signals_df = pd.concat([signals_df, bbands_df], axis=1)
-    signals_df.drop(columns=["SIGNAL", "BB_MIDDLE", inplace=True)
-
+    signals_df.drop(columns=["SIGNAL","BB_MIDDLE"], inplace=True)
+    
     # Exit is the labeled target for ML, Exit Price is for use in Pnl Metrics
-    signals_df["Entry Price"] = 0
-    signals_df["Entry Time"] = 0
+    signals_df["Entry Price"] = float(0)
+    signals_df["Entry Time"] = pd.Timestamp(0)
     
-    signals_df["Exit Price"] = 0
-    signals_df["Exit Time"] = 0
+    signals_df["Exit Price"] = float(0)
+    signals_df["Exit Time"] = pd.Timestamp(0)
     signals_df["Exit"] = 0
-    
     
     ### Add Discrete Features Columns to the DataFrame
-
-    # discrete or continuous features (techinal indicators) may be used
-    continuous_features = ["volume", "trade_count", "vwap", "9EMA", "20EMA", "50EMA", "200SMA", "ATR", "RSI", "BB_UPPER", "BB_LOWER", "MACD"]
-    all_features = ["volume", "trade_count", "vwap", "9EMA", "20EMA", "50EMA", "200SMA", "ATR", "RSI", "BB_UPPER", "BB_MIDDLE", "BB_LOWER", "MACD", "Bollinger_Bands_Above_Upper_BB", "Bollinger_Bands_Below_Lower_BB", "9EMA/20EMA_Cross, 9EMA>20EMA", "9EMA/20EMA_Cross, 9EMA<20EMA", "50EMA/200SMA_Cross, 50EMA>200SMA", "50EMA/200SMA_Cross, 50EMA<200SMA", "RSI_Over_70", "RSI_Under_30", "VWAP_Cross_From_Above", "VWAP_Cross_From_Below"]
-    
-    # Exit is the labeled target for ML, Exit Price is for use in Pnl Metrics
-    signals_df["Exit Price"] = float(0)
-    signals_df["Exit"] = 0
-
-    # # Define NYSE regular trading hours
-    # nyse_opening_time = pd.Timestamp("09:30:00")
-    # nyse_closing_time = pd.Timestamp("16:00:00")
-    
-    # # Filter the DataFrame to include only data within NYSE regular trading hours
-    # signals_df = signals_df.between_time(nyse_opening_time.time(), nyse_closing_time.time())
-       
         
     ### Create Volatility Based Targets and Stops
-    # Disable the warning
-    pd.options.mode.chained_assignment = None  # "None" suppresses the warning
+
     # here we create the exit column, our "y", for use in supervised ML
     # How many rows are in the signals_df? for use in modifying DataFrame
     num_rows_in_df = signals_df.shape[0]
@@ -105,7 +95,10 @@ def add_features(signals_df, reward, risk):
     
     # drop beginning columns to avoid NaN values from EMA/SMA calculations
     signals_df = signals_df[longest_MA_window:]
-        
+    
+    # Re-enable all warnings to their default behavior
+    warnings.resetwarnings()   
+    
     return signals_df
     
     

@@ -30,12 +30,4 @@ def download_data(ticker, timeframe, start_date):
 
 
 
-def read_data(ticker, timeframe):
-# Load the DataFrame from a CSV file
-    signals_df = pd.read_csv(f'./data/{ticker}/{ticker}_{timeframe}_time_series_df.csv', index_col="timestamp")
-    
-    # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
-    signals_df.index = pd.to_datetime(signals_df.index)
-    
-    return signals_df
     
