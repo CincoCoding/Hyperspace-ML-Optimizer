@@ -10,7 +10,7 @@ from modules.crypto_data_processing import download_data, read_data
 from modules.crypto_feature_engineering import add_features, clean_data
 from modules.crypto_modeling import train_model
 from modules.evaluation import evaluate_model
-from modules.simulate import record_sim_trades
+from modules.crypto_simulate import record_sim_trades
 from modules.metrics import record_sim_metrics
 
 def main():
