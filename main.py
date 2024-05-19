@@ -2,29 +2,30 @@
 
 # import libraries
 import pandas as pd
-from modules import config
-from modules import dependencies
+
+from stocks import stocks_config
+from shared import dependencies
 
 # import functions and classes
-from modules.data_processing import download_data, read_data
-from modules.feature_engineering import add_features, clean_data
-from modules.modeling import train_model
-from modules.evaluation import evaluate_model
-from modules.simulate import record_sim_trades
-from modules.metrics import record_sim_metrics
+from stocks.data_processing import download_data, read_data
+from stocks.feature_engineering import add_features, clean_data
+from stocks.modeling import train_model
+from shared.evaluation import evaluate_model
+from stocks.simulate import record_sim_trades
+from shared.metrics import record_sim_metrics
 
 def main():
 
     results = []
 
-    for ticker in config.ticker_values:
-        for timeframe in config.timeframe_values:
+    for ticker in stocks_config.ticker_values:
+        for timeframe in stocks_config.timeframe_values:
             results = []
             print(f"Results = [{results}]")
             print(f"download_data(ticker={ticker}, timeframe={timeframe[0]}, start={timeframe[1]})")
             download_data(ticker, timeframe[0], timeframe[1])
-            for reward in config.reward_values:
-                for risk in config.risk_values:
+            for reward in stocks_config.reward_values:
+                for risk in stocks_config.risk_values:
                            
                     # Your program's main logic here
                     print(f"read_data(), Reward = {reward}, Risk = {risk}")
