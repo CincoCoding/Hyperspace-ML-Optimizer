@@ -14,6 +14,9 @@ def record_sim_trades(signals_df, testing_signal_predictions, testing_probabilit
     predictions_df["actual_returns"] = signals_df["close"].pct_change()
 
     predictions_df[["Entry Price", "Entry Time", "Exit Price", "Exit Time"]] = signals_df[["Entry Price", "Entry Time", "Exit Price", "Exit Time"]]
+    print(type(predictions_df["Entry Time"]))
+    print(type(signals_df["Entry Time"]))
+
     
     predictions_df["algo_returns"] = (signals_df["Exit Price"] - signals_df["Entry Price"])/signals_df["Entry Price"]
     

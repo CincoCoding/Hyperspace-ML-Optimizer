@@ -22,8 +22,10 @@ def main():
         for timeframe in stocks_config.timeframe_values:
             results = []
             print(f"Results = [{results}]")
-            print(f"download_data(ticker={ticker}, timeframe={timeframe[0]}, start={timeframe[1]})")
-            download_data(ticker, timeframe[0], timeframe[1])
+      
+            # print(f"download_data(ticker={ticker}, timeframe={timeframe[0]}, start={timeframe[1]})")
+            # download_data(ticker, timeframe[0], timeframe[1])
+            
             for reward in stocks_config.reward_values:
                 for risk in stocks_config.risk_values:
                            
