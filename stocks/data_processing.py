@@ -22,7 +22,7 @@ def download_data(ticker, timeframe, start_date):
     signals_df = api.get_bars(ticker, {timeframe}, {start_date}, "2023-08-30", adjustment='raw').df
     
     # Save the DataFrame with the date index
-    signals_df.to_csv(f'./shared/data/{ticker}/{ticker}_{timeframe}_time_series_df.csv')
+    signals_df.to_csv(f'./shared/data/{ticker}/{ticker}_{timeframe}_time_series_df_FAST.csv')
     
     print(signals_df.head())
     

@@ -10,6 +10,7 @@ def record_sim_metrics(buy_signals_df, ticker, timeframe, reward, risk, results)
     time_period_days = (end_date - start_date).days + 1  # Adding 1 to include both start and end dates
     
     # Filter the winning, losing, and total trades
+
     winning_trades = buy_signals_df[buy_signals_df['trading_algorithm_returns'] > 0]
     losing_trades = buy_signals_df[buy_signals_df['trading_algorithm_returns'] < 0]
     total_trades = buy_signals_df["trading_algorithm_returns"]
