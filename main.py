@@ -5,6 +5,7 @@ import pandas as pd
 
 from stocks import stocks_config
 from shared import dependencies
+from shared.time_it import time_it
 
 # import functions and classes
 from stocks.data_processing import download_data, read_data
@@ -31,13 +32,16 @@ def main():
                            
                     # Your program's main logic here
                     print(f"read_data(), Reward = {reward}, Risk = {risk}")
-                    data = read_data(ticker, timeframe[0])
+                    timed_read_data = time_it(read_data)
+                    data = timed_read_data(ticker, timeframe[0])
     
                     print(f"add_features(), Reward = {reward}, Risk = {risk}")
-                    data_with_features = add_features(data, reward, risk)
+                    timed_add_features = time_it(add_features)
+                    data_with_features = timed_add_features(data, reward, risk)
     
                     print(f"clean_data(), Reward = {reward}, Risk = {risk}")
-                    cleaned_data = clean_data(data_with_features)
+                    timed_clean_data = time_it(clean_data)
+                    cleaned_data = timed_clean_data(data_with_features)
     
                     print(f"train_model(), Reward = {reward}, Risk = {risk}")
                     model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data, timeframe[2])

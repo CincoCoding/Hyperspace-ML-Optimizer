@@ -57,29 +57,18 @@ def add_features(signals_df, reward, risk):
     # Close the pool
     pool.close()
     pool.join()
-          
+
     # Merge results back into signals_df
     for result in results:
         j, entry_price, entry_time, exit_price, exit_signal, exit_time = result
-        signals_df["Entry Price"].iloc[j] = entry_price
-        signals_df["Entry Time"].iloc[j] = entry_time
-        signals_df["Exit Price"].iloc[j] = exit_price
-        signals_df["Exit"].iloc[j] = exit_signal
-        signals_df["Exit Time"].iloc[j] = exit_time
+        # Ensure `j` is an index label before using `.at`
+        index_label = signals_df.index[j]
+        signals_df.at[index_label, "Entry Price"] = entry_price
+        signals_df.at[index_label, "Entry Time"] = entry_time
+        signals_df.at[index_label, "Exit Price"] = exit_price
+        signals_df.at[index_label, "Exit"] = exit_signal
+        signals_df.at[index_label, "Exit Time"] = exit_time
 
-    # # Merge results back into signals_df
-    # for result in results:
-    #     j, entry_price, entry_time, exit_price, exit_signal, exit_time = result
-    #     # Ensure `j` is an index label before using `.at`
-    #     index_label = signals_df.index[j]
-    #     signals_df.at[index_label, "Entry Price"] = entry_price
-    #     signals_df.at[index_label, "Entry Time"] = entry_time
-    #     signals_df.at[index_label, "Exit Price"] = exit_price
-    #     signals_df.at[index_label, "Exit"] = exit_signal
-    #     signals_df.at[index_label, "Exit Time"] = exit_time
-
-    
-        
     print(signals_df)
     return signals_df
 
