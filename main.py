@@ -35,12 +35,11 @@ def main():
                     timed_read_data = time_it(read_data)
                     data = timed_read_data(ticker, timeframe[0])
     
-                    # print(f"add_features(), Reward = {reward}, Risk = {risk}")
-                    
+                    print(f"add_features(), Reward = {reward}, Risk = {risk}")
                     timed_add_features = time_it(parallel_process_features)
-                    for i in range(1, 13):
-                        print(f"num_processes = ", i)
-                        data_with_features = timed_add_features(data, reward, risk, i)
+                    # for i in range(1, 13):
+                    #     print(f"num_processes = ", i)
+                    data_with_features = timed_add_features(data, reward, risk, 6)
     
                     print(f"clean_data(), Reward = {reward}, Risk = {risk}")
                     timed_clean_data = time_it(clean_data)
@@ -65,7 +64,7 @@ def main():
                     print(results, len(results))
             
             results_df = pd.DataFrame(results)
-            results_df.to_csv(f"./data/{ticker}/{ticker}_{timeframe[0]}_results_df.csv", index=False)
+            results_df.to_csv(f"./shared/data/{ticker}/{ticker}_{timeframe[0]}_results_df.csv", index=False)
 
 
 

@@ -114,7 +114,6 @@ def add_features(signals_df, reward, risk):
       
 def clean_data(signals_df):
     ## Data Cleaning
-
     # remove all unwanted zeros from the exit column
     signals_df = signals_df.loc[signals_df["Exit"] != 0]
     # signals_df = signals_df[signals_df["volume"] >= signals_df["volume"].mean()]
@@ -128,7 +127,9 @@ def parallel_process_features(signals_df, reward, risk, num_processes):
     with multiprocessing.Pool(processes=num_processes) as pool:
         results = pool.starmap(add_features_chunk, [(chunk, reward, risk) for chunk in chunks])
     
-    return pd.concat(results)
+    results = pd.concat(results)
+    return results
+
     
     # return results
     
