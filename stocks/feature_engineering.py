@@ -42,7 +42,7 @@ def add_features(signals_df, reward, risk):
     reward = reward
     risk = risk
     
-    rows = [(j, signals_df["close"].iloc[j], signals_df["ATR"].iloc[j], signals_df, num_rows_in_df, risk, reward) for j in range(longest_MA_window, num_rows_in_df)]
+    rows = [(j, signals_df["close"].iloc[j], signals_df.index[j], signals_df["ATR"].iloc[j], signals_df, num_rows_in_df, risk, reward) for j in range(longest_MA_window, num_rows_in_df)]
     
     # Number of processes
     num_processes = 4  # Adjust according to your system resources
@@ -52,30 +52,44 @@ def add_features(signals_df, reward, risk):
     
     # Parallelize the processing of rows and collect results
     results = pool.map(process_row, rows)
+
     
     # Close the pool
     pool.close()
     pool.join()
     
+    ### FAST VERSION WIP
+    # # Merge results back into signals_df
+    # for result in results:
+    #     j, entry_price, entry_time, exit_price, exit_signal, exit_time = result
+    #     signals_df.at[j, "Entry Price"] = entry_price
+    #     signals_df.at[j, "Entry Time"] = entry_time
+    #     signals_df.at[j, "Exit Price"] = exit_price
+    #     signals_df.at[j, "Exit"] = exit_signal
+    #     signals_df.at[j, "Exit Time"] = exit_time
+        
     # Merge results back into signals_df
     for result in results:
-        j, exit_price, exit_signal, exit_time = result
+        j, entry_price, entry_time, exit_price, exit_signal, exit_time = result
+        signals_df["Entry Price"].iloc[j] = entry_price
+        signals_df["Entry Time"].iloc[j] = entry_time
         signals_df["Exit Price"].iloc[j] = exit_price
         signals_df["Exit"].iloc[j] = exit_signal
         signals_df["Exit Time"].iloc[j] = exit_time
-    
+        
+    print(signals_df)
     return signals_df
 
     
 def process_row(row):
-    j, entry, atr, signals_df, num_rows_in_df, risk, reward = row
+    j, entry_price, entry_time, atr, signals_df, num_rows_in_df, risk, reward = row
     
     exit_price = 0
     exit_signal = 0
     exit_time = pd.Timestamp(0)
     
-    stop = entry - (risk * atr)
-    target = entry + (reward * atr)
+    stop = entry_price - (risk * atr)
+    target = entry_price + (reward * atr)
     
     for k in range(j + 1, num_rows_in_df):
         curr_low = signals_df["low"].iloc[k]
@@ -84,14 +98,16 @@ def process_row(row):
             exit_price = stop
             exit_signal = -1
             exit_time = signals_df.index[k]
+            # print("stop")
             break
         elif curr_high >= target:
             exit_price = target
             exit_signal = 1
             exit_time = signals_df.index[k]
+            # print("target")
             break
     
-    return (j, exit_price, exit_signal, exit_time)
+    return (j, entry_price, entry_time, exit_price, exit_signal, exit_time)
 
     
 def clean_data(signals_df):
