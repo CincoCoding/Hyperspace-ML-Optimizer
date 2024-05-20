@@ -9,7 +9,7 @@ from shared.time_it import time_it
 
 # import functions and classes
 from stocks.data_processing import download_data, read_data
-from stocks.feature_engineering import add_features, clean_data
+from stocks.feature_engineering import parallel_process_features, clean_data, add_features
 from stocks.modeling import train_model
 from shared.evaluation import evaluate_model
 from stocks.simulate import record_sim_trades
@@ -35,25 +35,32 @@ def main():
                     timed_read_data = time_it(read_data)
                     data = timed_read_data(ticker, timeframe[0])
     
-                    print(f"add_features(), Reward = {reward}, Risk = {risk}")
-                    timed_add_features = time_it(add_features)
-                    data_with_features = timed_add_features(data, reward, risk)
+                    # print(f"add_features(), Reward = {reward}, Risk = {risk}")
+                    
+                    timed_add_features = time_it(parallel_process_features)
+                    for i in range(1, 13):
+                        print(f"num_processes = ", i)
+                        data_with_features = timed_add_features(data, reward, risk, i)
     
                     print(f"clean_data(), Reward = {reward}, Risk = {risk}")
                     timed_clean_data = time_it(clean_data)
                     cleaned_data = timed_clean_data(data_with_features)
     
                     print(f"train_model(), Reward = {reward}, Risk = {risk}")
-                    model, X_train, X_test, y_train, y_test, X_test_index = train_model(cleaned_data, timeframe[2])
+                    timed_train_model = time_it(train_model)
+                    model, X_train, X_test, y_train, y_test, X_test_index = timed_train_model(cleaned_data, timeframe[2])
                     
                     print(f"evaluate_model(), Reward = {reward}, Risk = {risk}")
-                    predictions, prediction_probabilities = evaluate_model(model, X_train, X_test, y_train, y_test)
+                    timed_evaluate_model = time_it(evaluate_model)
+                    predictions, prediction_probabilities = timed_evaluate_model(model, X_train, X_test, y_train, y_test)
     
                     print(f"record_sim_trades(), Reward = {reward},  Risk = {risk}")
-                    buy_signals_df = record_sim_trades(cleaned_data, predictions, prediction_probabilities, X_test_index)
+                    timed_record_sim_trades = time_it(record_sim_trades)
+                    buy_signals_df = timed_record_sim_trades(cleaned_data, predictions, prediction_probabilities, X_test_index)
     
                     print(f"record_sim_metrics(), Reward = {reward}, Risk = {risk}")
-                    results = record_sim_metrics(buy_signals_df, ticker, timeframe, reward, risk, results)
+                    timed_record_sim_metrics = time_it(record_sim_metrics)
+                    results = timed_record_sim_metrics(buy_signals_df, ticker, timeframe, reward, risk, results)
     
                     print(results, len(results))
             
