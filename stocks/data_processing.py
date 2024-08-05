@@ -23,9 +23,7 @@ def download_data(ticker, timeframe, start_date):
     
     # Save the DataFrame with the date index
     signals_df.to_csv(f'./shared/data/{ticker}/{ticker}_{timeframe}_time_series_df_FAST.csv')
-    
-    print(signals_df.head())
-    
+        
     return signals_df
 
 
@@ -36,7 +34,5 @@ def read_data(ticker, timeframe):
     
     # Convert the first column (assuming it contains datetime-like values) to DatetimeIndex
     signals_df.index = pd.to_datetime(signals_df.index)
-    
-    print(signals_df)
-    
+        
     return signals_df

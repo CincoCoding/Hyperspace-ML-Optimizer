@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from finta import TA
 
 import pandas as pd 
-import hvplot.pandas
+# import hvplot.pandas
 from pandas.tseries.offsets import DateOffset
 
 import alpaca_trade_api as tradeapi

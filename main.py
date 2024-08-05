@@ -4,7 +4,7 @@
 import pandas as pd
 
 from stocks import stocks_config
-from shared import dependencies
+# from shared import dependencies (not working, scope(???))
 from shared.time_it import time_it
 
 # import functions and classes
@@ -44,8 +44,8 @@ def main():
                     print(f"clean_data(), Reward = {reward}, Risk = {risk}")
                     timed_clean_data = time_it(clean_data)
                     cleaned_data = timed_clean_data(data_with_features)
-                    print(cleaned_data)
                     
+                    print(cleaned_data)
                     print(f"train_model(), Reward = {reward}, Risk = {risk}")
                     timed_train_model = time_it(train_model)
                     model, X_train, X_test, y_train, y_test, X_test_index = timed_train_model(cleaned_data, timeframe[2])

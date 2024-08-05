@@ -1,8 +1,7 @@
 # evaluation.py
 
 # imports
-from sklearn import svm
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+from sklearn.metrics import classification_report
 
 def evaluate_model(model, undersampled_X_train_scaled, X_test_scaled, undersampled_y_train, y_test):
     # Use the trained model to predict the trading signals for the training data

@@ -107,7 +107,6 @@ def add_features(signals_df, reward, risk):
     
     # Re-enable all warnings to their default behavior
     warnings.resetwarnings()   
-    print(signals_df)
     
     return signals_df
     
@@ -122,12 +121,17 @@ def clean_data(signals_df):
 
 # Function to chunk the data and process each chunk in parallel
 def parallel_process_features(signals_df, reward, risk, num_processes):
+    import warnings
+    warnings.filterwarnings("ignore", category=FutureWarning, message=".*swapaxes.*")
+    
     chunks = np.array_split(signals_df, num_processes)
     
     with multiprocessing.Pool(processes=num_processes) as pool:
         results = pool.starmap(add_features_chunk, [(chunk, reward, risk) for chunk in chunks])
     
     results = pd.concat(results)
+    warnings.resetwarnings()   
+
     return results
 
     

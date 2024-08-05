@@ -1,7 +1,5 @@
 # visualization.py
 
-import pandas as pd
-
 def record_sim_metrics(buy_signals_df, ticker, timeframe, reward, risk, results):
 
     # Calculate the time period for which you want to calculate the frequency (e.g., in days)

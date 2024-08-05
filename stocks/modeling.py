@@ -3,9 +3,7 @@
 # Import libraries
 from stocks.stocks_config import features
 from pandas.tseries.offsets import DateOffset
-from sklearn.model_selection import train_test_split 
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 from sklearn import svm
 from imblearn.under_sampling import RandomUnderSampler
 
